@@ -1,4 +1,5 @@
 import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -14,15 +15,27 @@ class GameField extends BorderPane
         Team heroes = new Team(numHeroes, Teams.HERO);
         Team villains = new Team(numVillains, Teams.VILLAIN);
         Team environment = new Team(0, Teams.ENVIRONMENT);
+        VBox heroButtons = new VBox();
         ScrollPane scroll = new ScrollPane();
         StackPane scrollStack = new StackPane();
 
-
+        Button decrementHP = new Button("-1 all heroes");
+        decrementHP.setOnAction(e -> {
+            for(Node node : heroes.getChildren())
+            {
+                if(node instanceof Character)
+                {
+                    ((Character) node).decrementHP();
+                }
+            }
+        });
 
         //Add Target columns and Buttons
         FlowPane targets = new FlowPane();
         targets.getChildren().add(heroes);
-        targets.getChildren().add(addTargetButton(heroes, "Add Hero Target"));
+        heroButtons.getChildren().add(addTargetButton(heroes, "Add Hero Target"));
+        heroButtons.getChildren().add(decrementHP);
+        targets.getChildren().add(heroButtons);
 
         targets.getChildren().add(villains);
         targets.getChildren().add(addTargetButton(villains, "Add Villain Target"));

@@ -200,5 +200,10 @@ class Character extends VBox
             }
         }
     }
+
+    void decrementHP()
+    {
+        HP.decrement();
+    }
 }
 
